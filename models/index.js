@@ -1,4 +1,4 @@
-// Requirements / Imports
+// Imports / Requirements
 
 const Thought = require('./Thought');
 const User = require('./User');
