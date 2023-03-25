@@ -1,4 +1,4 @@
-// Require
+// Requirements / Imports
 
 const db = require('./config/connection');
 const express = require('express');
