@@ -17,7 +17,8 @@ app.use(express.json());
 app.use(routes);
 
 // Run Port
-
+db.once('open', () => {
 app.listen(PORT, () => {
     console.log('Social Network API Server running on port ${PORT}.');
+});
 });
