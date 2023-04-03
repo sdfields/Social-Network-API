@@ -1,6 +1,6 @@
 // Imports / Requirements
 
-const { model, Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // User
 
@@ -18,6 +18,8 @@ const userSchema = new Schema (
             type: String,
             required: true,
             unique: true,
+            // RegEx to Match Email
+            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, 'Please enter a valid email address.'],
         },
         // Thoughts
         thoughts: [
