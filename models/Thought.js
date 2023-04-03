@@ -38,6 +38,8 @@ const thoughtSchema = new Schema(
   }
 );
 
+// Virtual for Reaction Count
+
 thoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length;
 });

@@ -1,19 +1,14 @@
-// This route is for /api/users
+// Imports / Requirements
 
-// GET all users
+const router = require('express').Router();
 
-// GET a single user by its id and populated thought and friend data
-
-// POST a new user
-
-// PUT to update user by id
-
-// DELETE to remove user by id
-
-
-// This route is for the /api/users/:userId/friends/:friendId
-
-// POST to add a new friend to a user's friend list
-
-// DELETE to remove a friend from a user's friend list
+const {
+    getUsers,
+    getSingleUser,
+    createUser,
+    updateUser,
+    deleteUser,
+    addToFriends,
+    removeFromFriends,
+} = require('../../controllers/userController');
 
