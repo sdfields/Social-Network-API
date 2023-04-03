@@ -7,6 +7,6 @@ const apiRoutes = require('./api');
 
 router.use('/api', apiRoutes);
 
-router.use((req, res) => res.send('Try a different route!'));
+router.use((req, res) => res.send('Unable to reach route!'));
 
 module.exports = router;
