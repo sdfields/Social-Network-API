@@ -1,16 +1,97 @@
-// GET to get all thoughts
+// Imports / Requirements
 
-// GET to get a single thought by its id
+const { Thought, User } = require('../models');
 
-// POST to create a new thought (don't forget to push the created thought's id to the associated users thoughts array field)
+module.exports = {
 
-// PUT to update a thought by its id
+    // GET All Thoughts 
 
-// DELETE to remove a thought by its id
+    getThoughts(req, res) {
+        Thought.find()
+        .then((thoughtData) => res.json(thoughtData))
+        .catch((err) => res.status(500).json(err));
+    },
 
+    // GET Single Thought
 
-// This route is to /api/thoughts/:thoughtsId/reactions
+    getSingleThought(req, res) {
+        Thought.findOne({ _id: req.params.thoughtId })
+        .select("-__v")
+        .then((thoughtData) => !thoughtData
+            ? res.status(404).json({ message: 'No thoughts found with that ID' })
+            : res.json(thoughtData)
+        )
+        .catch((err) => res.status(500).json(err));
+    },   
 
-// POST to create a reaction stored in a single thought's reactions array field
+    // POST Thought
 
-// DELETE to pull and remove a reaction by the reaction's reactionId value
+    createThought(req, res) {
+        Thought.create(req.body)
+        .then(({ _id}) => {
+            return User.findOneAndUpdate(
+                { _id: req.body.userId },
+                { $push: {thoughts: _id} },
+                { new: true },
+            )
+        }).then(userData => res.json(userData))
+        .catch((err) => {
+            console.log(err)
+            return res.status(500).json(err);
+    });
+    },
+
+    // PUT Thought by ID
+
+    updateThought(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: req.body },
+            { runValidators: true},
+            { new: true},
+        ).then((thoughtData) => !thoughtData
+            ? res.status(404).json({ message: 'No thoughts found with that ID' })
+            : res.json(thoughtData)
+        ).catch((err) => res.status(500).json(err));
+    },
+
+    // DELETE Thought by ID
+
+    deleteThought(req, res) {
+        Thought.findOneAndDelete({ _id: req.params.thoughtId })
+        .then((thoughtData) => res.json(thoughtData))
+        .catch((err) => res.status(500).json(err));
+    },
+
+    // POST Reaction in single thought's 'reactions' array
+
+    addReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $push: { reactions: req.body }},
+            { runValidators: true },
+            { new: true }, 
+        ).then((thoughtData) => res.json(thoughtData))
+        .catch(err => {
+            console.log(err)
+            res.status(400).json(err)
+        });
+    },
+
+    // DELETE to pull and remove reaction by the reactionId
+
+    deleteReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: req.params.reactionId }},
+            { runValidators: true},
+            { new: true},
+        ).then((thoughtData) => !thoughtData 
+            ? res.status(404).json({ message: 'There was an error when deleting your reaction.'})
+            : res.json({ message: 'Reaction successfully deleted!'})
+        ).catch((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        });
+    }
+};
