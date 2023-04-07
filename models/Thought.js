@@ -1,7 +1,7 @@
 // Imports / Requirements
 
-const { Schema, model } = require("mongoose");
 const moment = require("moment");
+const { Schema, model } = require("mongoose");
 const reactionSchema = require("./Reaction");
 
 // Thought
@@ -40,7 +40,9 @@ const thoughtSchema = new Schema(
 
 // Virtual for Reaction Count
 
-thoughtSchema.virtual('reactionCount').get(function() {
+thoughtSchema
+.virtual('reactionCount')
+.get(function() {
     return this.reactions.length;
 });
 

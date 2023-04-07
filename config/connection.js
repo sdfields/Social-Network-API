@@ -4,10 +4,7 @@ const { connect, connection } = require('mongoose');
 
 // Database Connection
 
-const dbConnection = 
-process.env.MONGODB_URI || 'mongodb://127.0.0.1/socialNetworkDB';
-
-connect(dbConnection, {
+connect('mongodb://127.0.0.1/socialNetworkDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
