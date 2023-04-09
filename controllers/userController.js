@@ -72,9 +72,33 @@ module.exports = {
 
   // POST to add a new friend to a user's friend list
 
-  addToFriends(req, res) {},
+  addToFriends(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      {runValidators: true},
+      {new: true}
+    ).then((userData) => res.json(userData))
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json(err)
+    })
+  },
 
   // DELETE to remove a friend from a user's friend list
 
-  removeFromFriends(req, res) {},
+  removeFromFriends(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { runValidators: true },
+      { new: true }
+    ).then((userData) => !userData
+      ? res.status(404).json({ message: 'Failed to remove friend' })
+      : res.json({ message: 'Friend successfully removed!' })
+    ).catch((err) => {
+      console.log(err)
+      res.status(400).json(err)
+    });
+  },
 };
