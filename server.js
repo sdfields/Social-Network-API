@@ -19,6 +19,6 @@ app.use(routes);
 // Run Server
 db.once("open", () => {
   app.listen(PORT, () => {
-    console.log("Social Network API Server running on port ${PORT}.");
+    console.log(`Social Network API Server running on port ${PORT}.`);
   });
 });

@@ -21,7 +21,7 @@ const reactionSchema = new Schema(
   },
   // Username
   username: {
-    Type: String,
+    type: String,
     required: true,
   },
   // Created at

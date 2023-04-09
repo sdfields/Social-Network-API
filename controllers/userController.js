@@ -5,6 +5,7 @@ const { User } = require("../models");
 // Exports for Routes
 
 module.exports = {
+  
   // GET all users
 
   getUsers(req, res) {

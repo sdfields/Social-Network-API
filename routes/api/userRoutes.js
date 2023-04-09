@@ -12,19 +12,17 @@ const {
     removeFromFriends,
 } = require('../../controllers/userController');
 
-// Routes for all users
+// Routes for Users
 // '/api/users'
 
-router
-.route('/')
+router.route('/')
 .post(createUser)
 .get(getUsers);
 
 // Routes for users by id
 // '/api/users/:userId'
 
-router
-.route('/:userId')
+router.route('/:userId')
 .get(getSingleUser)
 .put(updateUser)
 .delete(deleteUser);
@@ -32,15 +30,13 @@ router
 // Routes for adding friend by user by ID and friend ID
 // '/api/users/:userId/friends/:friendId'
 
-router
-.route('/:userId/friends/:friendId')
+router.route('/:userId/friends/:friendId')
 .post(addToFriends);
 
 // Routes for removing friend by user by ID and friend ID
 // '/api/users/:userId/friends/:friendId'
 
-router
-.route('/:userId/friends/:friendId')
+router.route('/:userId/friends/:friendId')
 .delete(removeFromFriends);
 
 module.exports = router;
